@@ -1,18 +1,19 @@
 const express = require('express');
 const app = express();
-const port = 3005;
+const port = 3005; //Express.js 
 
 const cors = require('cors');
 
+//to prevent cross-origin request blocked errors 
 app.use(cors());
 
-app.use(express.static('public'));
-
-
+//GET /
 app.get('/', (request, response) => {
     response.send("Hello World");
 });
 
+//GET /package
+//to access this route from the client, route to 'https://localhost:3005/package'
 app.get('/package', (req, res) => {
     let data = {
         packageTrackingNumber: '1Z12345E1392654435',

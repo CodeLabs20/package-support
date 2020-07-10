@@ -13,8 +13,16 @@ export default function Package(){
         packageDeliverStatus: "Not Known"
     };
 
+    //useState is like this.state
+    //dataInit is the initial data for packageData
+    //packageData is the current state
+    //setPackageData is the function that updates it (like setState)
     const [packageData, setPackageData] = useState(dataInit);
+    //useEffect triggers anytime the component is rendered; like componentDidMount and componentDidUpdate
+    //empty array is passed as second argument so it is only triggered once
     useEffect(() => {
+        //axios functions like ajax and fetch
+        //getting data from the Express.js server
         axios.get('http://localhost:3005/package')
             .then(response => setPackageData(response.data));
     }, []);
