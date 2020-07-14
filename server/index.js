@@ -1,5 +1,14 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const packageModel = require('./schema.js');
+
 const app = express();
+app.use(express.json()); // Make sure it comes back as json
+
+mongoose.connect('mongodb+srv://<username>:<password>@cluster0.mle1w.mongodb.net/package-support?retryWrites=true&w=majority', {
+  useNewUrlParser: true
+});
+
 const port = 3005; //Express.js 
 
 const cors = require('cors');
@@ -23,6 +32,28 @@ app.get('/package', (req, res) => {
     }
     res.send(data);
 })
+
+
+app.get('/packageStatus', async (req, res) => {
+  const packages = await packageModel.find({});
+
+  try {
+    res.send(packages);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+app.post('/packageStatus', async (req, res) => {
+  const package = new packageModel(req.body);
+
+  try {
+    await package.save();
+    res.send(package);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 app.listen(port, () => console.log("Express server on port 3005"));
 
