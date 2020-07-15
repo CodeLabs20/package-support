@@ -21,9 +21,9 @@ app.get('/', (request, response) => {
     response.send("Hello World");
 });
 
-//GET /package
+//GET /testData
 //to access this route from the client, route to 'https://localhost:3005/package'
-app.get('/package', (req, res) => {
+app.get('/testData', (req, res) => {
     let data = {
         packageTrackingNumber: '1Z12345E1392654435',
         packageTotalItems: 3,
@@ -33,8 +33,9 @@ app.get('/package', (req, res) => {
     res.send(data);
 })
 
-
-app.get('/packageStatus', async (req, res) => {
+//GET /getAllPackages
+//retrieve records for all packages in the database
+app.get('/getAllPackages', async (req, res) => {
   const packages = await packageModel.find({});
 
   try {
@@ -44,7 +45,22 @@ app.get('/packageStatus', async (req, res) => {
   }
 });
 
-app.post('/packageStatus', async (req, res) => {
+//GET /getPackage
+//retrieve records for a single package
+app.get('/getPackage/:trackingNum', function (req, res) {
+
+  const package = packageModel.find({trackingNum: req.params.trackingNum});
+
+  try {
+    res.send(package);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+//POST /createPackage
+//create a record for a new package
+app.post('/createPackage', async (req, res) => {
   const package = new packageModel(req.body);
 
   try {
@@ -54,6 +70,24 @@ app.post('/packageStatus', async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+//PATCH /updatePackage/:id
+//update an existing package record
+app.patch('/updatePackage/:id', async (req, res) => {
+  var id = req.params.id;
+
+  try {
+    let package = await packageModel.findByIdAndUpdate(req.params.id, req.body);
+    await package.save();
+
+    package = await packageModel.findById(req.params.id);
+
+    res.send(package);
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
+
 
 app.listen(port, () => console.log("Express server on port 3005"));
 
