@@ -6,7 +6,7 @@ const itemModel = require('./itemSchema.js');
 const app = express();
 app.use(express.json()); // Make sure it comes back as json
 
-mongoose.connect('mongodb+srv://codelabs713:NWypds7v3WICtVa8@cluster0.mle1w.mongodb.net/package-support?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://<username>:<password>@cluster0.mle1w.mongodb.net/package-support?retryWrites=true&w=majority', {
   useNewUrlParser: true
 });
 
