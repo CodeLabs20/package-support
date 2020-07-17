@@ -19,9 +19,14 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import TextField from '@material-ui/core/TextField';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+
+const inputProps = {
+  step: 300,
+};
 
 function Copyright() {
   return (
@@ -173,19 +178,13 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
+            {/* Search Bar */}
             <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
-                <Deposits />
+                <OutlinedInput id="time" type="time" inputProps={inputProps}/>;
               </Paper>
             </Grid>
-            {/* Recent Orders */}
+            {/* Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Orders />
