@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const packageModel = require('./schema.js');
+const packageModel = require('./packageSchema.js');
+const itemModel = require('./itemSchema.js');
 
 const app = express();
 app.use(express.json()); // Make sure it comes back as json
 
-mongoose.connect('mongodb+srv://<username>:<password>@cluster0.mle1w.mongodb.net/package-support?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://codelabs713:NWypds7v3WICtVa8@cluster0.mle1w.mongodb.net/package-support?retryWrites=true&w=majority', {
   useNewUrlParser: true
 });
 
@@ -33,6 +34,8 @@ app.get('/testData', (req, res) => {
     res.send(data);
 })
 
+//package routes
+
 //GET /getAllPackages
 //retrieve records for all packages in the database
 app.get('/getAllPackages', async (req, res) => {
@@ -47,9 +50,9 @@ app.get('/getAllPackages', async (req, res) => {
 
 //GET /getPackage
 //retrieve records for a single package
-app.get('/getPackage/:trackingNum', function (req, res) {
+app.get('/getPackage/:trackingNum', async (req, res) => {
 
-  const package = packageModel.find({trackingNum: req.params.trackingNum});
+  const package = await packageModel.find({trackingNum: req.params.trackingNum});
 
   try {
     res.send(package);
@@ -74,7 +77,6 @@ app.post('/createPackage', async (req, res) => {
 //PATCH /updatePackage/:id
 //update an existing package record
 app.patch('/updatePackage/:id', async (req, res) => {
-  var id = req.params.id;
 
   try {
     let package = await packageModel.findByIdAndUpdate(req.params.id, req.body);
@@ -83,6 +85,63 @@ app.patch('/updatePackage/:id', async (req, res) => {
     package = await packageModel.findById(req.params.id);
 
     res.send(package);
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
+
+//item routes
+
+//GET /getAllItems
+//retrieve records for all item in the database
+app.get('/getAllItems', async (req, res) => {
+  const item = await itemModel.find({});
+
+  try {
+    res.send(item);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+//GET /getItem
+//retrieve records for a single item
+app.get('/getItem/:id', async (req, res) => {
+
+  try {
+    const item = await itemModel.findById(req.params.id);
+    res.send(item);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+//POST /createItem
+//create a record for a new item
+app.post('/createItem', async (req, res) => {
+  let item = new itemModel(req.body);
+
+  try {
+    await item.save();
+    item = await itemModel.findById(item.id);
+
+    res.send(item);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
+
+//PATCH /updateItem/:id
+//update an existing item record
+app.patch('/updateItem/:id', async (req, res) => {
+
+  try {
+    let item = await itemModel.findByIdAndUpdate(req.params.id, req.body);
+    await item.save();
+
+    item = await itemModel.findById(req.params.id);
+
+    res.send(item);
   } catch (err) {
     res.status(500).send(err)
   }

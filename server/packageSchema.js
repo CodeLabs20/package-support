@@ -1,19 +1,16 @@
 const mongoose = require('mongoose');
 
-//nested schema for items
-let itemSchema = new mongoose.Schema({
-  itemName: {type: String},
-  price: {type: Number},
-  quantity: {type: Number}
-
-});
-
-//parent schema for package information
+//schema for package information
 const packageSchema = new mongoose.Schema({
   trackingNum: {
     type: String,
     required: true,
     trim: true
+  },
+
+  carrier: {
+    type: String,
+    required: true
   },
 
   deliveryStatus: {
@@ -34,13 +31,6 @@ const packageSchema = new mongoose.Schema({
   checkInDate: {
     type: Date
   },
-
-  itemsOrdered: [itemSchema],
-
-  purchaseOrderStatus: {
-    type: String,
-    default: "unknown"
-  }
 
 
 }, {"collection":"purchase-order"});
