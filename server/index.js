@@ -3,10 +3,19 @@ const mongoose = require('mongoose');
 const packageModel = require('./packageSchema.js');
 const itemModel = require('./itemSchema.js');
 
+//EasyPostAPI
+const apiKey = '<API Key>'; //Production API Key //need to seperate out to another config file
+const EasyPost = require('@easypost/api');
+//create EasyPostAPI object to make calls to API
+const api = new EasyPost(apiKey, {
+    timeout: 10000
+});
+
 const app = express();
 app.use(express.json()); // Make sure it comes back as json
 
-mongoose.connect('mongodb+srv://<username>:<password>@cluster0.mle1w.mongodb.net/package-support?retryWrites=true&w=majority', {
+//put this info in another config file
+mongoose.connect('mongodb+srv://<user>:<password>@cluster0.mle1w.mongodb.net/package-support?retryWrites=true&w=majority', {
   useNewUrlParser: true
 });
 
@@ -34,6 +43,7 @@ app.get('/testData', (req, res) => {
     res.send(data);
 })
 
+//TODO: Create seperate folder for routes
 //package routes
 
 //GET /getAllPackages
@@ -147,6 +157,24 @@ app.patch('/updateItem/:id', async (req, res) => {
   }
 })
 
+//easypost API routes
+//POST /getDeliveryStatus
+//get delivery status from EasyPost API
+app.post('/getDeliveryStatus', async(req, res) => {
+  const tracker = new api.Tracker({
+      tracking_code: req.body.trackingNum,
+      carrier: req.body.carrier
+  })
+  try{
+      await tracker.save();
+      res.send(tracker.status);
+      //uncomment to get detailed tracking information
+      //res.send(tracker);
+  }
+  catch(err){
+      res.status(500).send(err);
+  }
+});
 
 app.listen(port, () => console.log("Express server on port 3005"));
 
