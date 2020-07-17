@@ -21,6 +21,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import CreateTrackingNum from './CreateTrackingNum';
 import TextField from '@material-ui/core/TextField';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 
@@ -118,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240,
+    height: 400,
   },
 }));
 
@@ -178,10 +179,9 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Search Bar */}
-            <Grid item xs={12} md={4} lg={3}>
+            <Grid item xs={12}>
               <Paper className={fixedHeightPaper}>
-                <OutlinedInput id="time" type="time" inputProps={inputProps}/>;
+                <CreateTrackingNum />
               </Paper>
             </Grid>
             {/* Orders */}
