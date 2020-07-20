@@ -1,21 +1,27 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const packageModel = require('./packageSchema.js');
-const itemModel = require('./itemSchema.js');
+const config = require('config-yml')
+
+//routers
+const packageRouter = require('./routes/packageRoutes.js');
+const itemRouter = require('./routes/itemRoutes.js');
+const testRouter = require('./routes/testRoutes.js');
+
 
 //EasyPostAPI
-const apiKey = '<API Key>'; //Production API Key //need to seperate out to another config file
+const apiKey = config.easy_post.prod_key; //Production API Key
 const EasyPost = require('@easypost/api');
 //create EasyPostAPI object to make calls to API
 const api = new EasyPost(apiKey, {
     timeout: 10000
 });
 
+
 const app = express();
 app.use(express.json()); // Make sure it comes back as json
 
-//put this info in another config file
-mongoose.connect('mongodb+srv://<user>:<password>@cluster0.mle1w.mongodb.net/package-support?retryWrites=true&w=majority', {
+//connect to db
+mongoose.connect(config.mongo_db.uri, {
   useNewUrlParser: true
 });
 
@@ -25,6 +31,13 @@ const cors = require('cors');
 
 //to prevent cross-origin request blocked errors 
 app.use(cors());
+
+app.use(packageRouter);
+app.use(itemRouter);
+app.use(testRouter);
+
+
+/*
 
 //GET /
 app.get('/', (request, response) => {
@@ -156,6 +169,11 @@ app.patch('/updateItem/:id', async (req, res) => {
     res.status(500).send(err)
   }
 })
+
+
+*/
+
+
 
 //easypost API routes
 //POST /getDeliveryStatus
