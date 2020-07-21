@@ -44,14 +44,47 @@ export default function CreateTrackingNum() {
             setDeliveryStatus(response.data);
             //need to seperate these in the future
             if(response.data != ''){
-                axios.post('http://localhost:3005/createPackage', {
-                    trackingNum: data.trackingNumber,
-                    carrier: data.carrier,
-                    deliveryStatus: response.data
-                });
+                writeToDB(data.trackingNumber, data.carrier, response.data);
             }
         })
         .catch((err) => console.log(err));
+    }
+
+    function writeToDB(trackingNum, carrier, deliveryStatus){
+        let deliveryCode = translateDeliveryStatus(deliveryStatus);
+        axios.post('http://localhost:3005/createPackage', {
+            trackingNum: trackingNum,
+            carrier: carrier,
+            deliveryStatus: deliveryCode
+        });
+    }
+
+    function translateDeliveryStatus(status){
+        let statusCode;
+        const statusText = ['pre_transit', 'in_transit', 'out_for_delivery', 'delivered', 'return_to_sender', 'failure', 'unknown'];
+        switch (status) {
+            case statusText[0]:
+                statusCode = 0;
+                break;
+            case statusText[1]:
+                statusCode = 1;
+                break;
+            case statusText[2]:
+                statusCode = 2;
+                break;
+            case statusText[3]:
+                statusCode = 3;
+                break;
+            case statusText[4]:
+                statusCode = 4;
+                break;
+            case statusText[5]:
+                statusCode = 5;
+                break;
+            default:
+                statusCode = 6;  
+        }
+        return statusCode;
     }
   
     return (
