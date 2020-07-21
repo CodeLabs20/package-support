@@ -20,7 +20,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems, secondaryListItems } from './listItems';
 import Deposits from './Deposits';
-import Orders from './Orders';
+import PackageList from './PackageList';
 import CreateTrackingNum from './CreateTrackingNum';
 import TextField from '@material-ui/core/TextField';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -187,7 +187,7 @@ export default function Dashboard() {
             {/* Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders />
+                <PackageList />
               </Paper>
             </Grid>
           </Grid>
