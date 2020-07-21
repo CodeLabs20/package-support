@@ -44,7 +44,7 @@ export default function PackageList() {
   });
 
   //arrays to convert data
-  const deliveryStatus = ['pre_transit', 'transit', 'out_for_delivery', 'delivered', 'return_to_sender', 'failure', 'unknown'];
+  const deliveryStatus = ['pre_transit', 'in_transit', 'out_for_delivery', 'delivered', 'return_to_sender', 'failure', 'unknown'];
   const checkinStatus = ['not checked in', 'checked in'];
 
   return (

@@ -60,7 +60,7 @@ export default function CreateTrackingNum() {
 
     function translateDeliveryStatus(status){
         let statusCode;
-        const statusText = ['pre_transit', 'transit', 'out_for_delivery', 'delivered', 'return_to_sender', 'failure', 'unknown'];
+        const statusText = ['pre_transit', 'in_transit', 'out_for_delivery', 'delivered', 'return_to_sender', 'failure', 'unknown'];
         switch (status) {
             case statusText[0]:
                 statusCode = 0;
