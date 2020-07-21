@@ -9,6 +9,7 @@ import axios from 'axios';
 import Title from './Title';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import "./CreateTrackingNum.css"
 
 const carriers = [
     {
@@ -55,22 +56,22 @@ export default function CreateTrackingNum() {
   
     return (
     <div>
-        <Title>
+        <h4 style={{marginTop: 60, fontSize: 60}} id="createtitle">
             Create Tracking Number
-        </Title>    
-        <form className="form" onSubmit={handleSubmit(submitTrackingForm)} style={{marginTop: 25}}>
+        </h4>    
+        <form className="form" onSubmit={handleSubmit(submitTrackingForm)} style={{marginTop: 70}}>
             <section>
                 <Controller as={
                     <TextField 
-                    label="Tracking Number" variant="outlined"
+                    label="Tracking Number" variant="outlined" style={{minWidth: 320}}
                     />
                     } 
                     name="trackingNumber" 
                     control={control} 
                     defaultValue="" />
-            </section>
-            <section style={{marginTop: 30}}>
-                <FormControl variant="outlined" style={{minWidth: 120}}>
+            {/* </section>
+            <section> */}
+                <FormControl variant="outlined" style={{minWidth: 120, marginLeft: 40}}>
                 <InputLabel id="select-outlined-label">Carrier</InputLabel>
                 <Controller as={
                     <Select
@@ -87,10 +88,12 @@ export default function CreateTrackingNum() {
                 control={control}
                 defaultValue=""/>
                 </FormControl>
-            </section>
-            <Button variant="contained" color="primary" style={{marginTop: 40}} type="submit">
+
+                <Button variant="contained" color="primary" style={{marginLeft: 40}} type="submit">
                 Submit
-            </Button>
+                </Button>
+            </section>
+
 
         </form>
         {/* need to comment out */}
