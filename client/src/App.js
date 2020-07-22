@@ -18,12 +18,11 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import Deposits from './Deposits';
+import { mainListItems } from './listItems';
+import CheckInForm from './CheckInForm';
 import PackageList from './PackageList';
 import CreateTrackingNum from './CreateTrackingNum';
-import TextField from '@material-ui/core/TextField';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+
 
 const inputProps = {
   step: 300,
@@ -173,7 +172,6 @@ export default function Dashboard() {
         <Divider />
         <List>{mainListItems}</List>
         <Divider />
-        <List>{secondaryListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -188,6 +186,7 @@ export default function Dashboard() {
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <PackageList />
+                <CheckInForm />
               </Paper>
             </Grid>
           </Grid>
@@ -197,5 +196,7 @@ export default function Dashboard() {
         </Container>
       </main>
     </div>
+
+    
   );
 }
