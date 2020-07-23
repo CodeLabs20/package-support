@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import axios from 'axios';
+import NumberFormat from 'react-number-format';
 
 //Create inventory records for list
 
@@ -47,6 +48,10 @@ export default function InventoryList() {
   //for the table once the right array has been created
   //<TableCell>{purchaseOrderStatus[row.deliveryStatus]}</TableCell>
 
+  function capitalize(str){
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
   return (
     <React.Fragment>
       <Title>Inventory List</Title>
@@ -63,8 +68,16 @@ export default function InventoryList() {
         <TableBody>
           {inventoryList.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.itemName}</TableCell>
-              <TableCell>{row.price}</TableCell>
+              <TableCell>{capitalize(row.itemName)}</TableCell>
+              <TableCell>
+                <NumberFormat 
+                  value={row.price} 
+                  displayType={'text'} 
+                  thousandSeparator={true} 
+                  prefix={'$'} 
+                  decimalScale={2} 
+                  fixedDecimalScale={true}/>
+              </TableCell>
               <TableCell>{row.quantity}</TableCell>
               <TableCell>{row.checkInDate}</TableCell>
               <TableCell>{row.purchaseOrderStatus}</TableCell>
