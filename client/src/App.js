@@ -25,6 +25,8 @@ import InventoryList from './InventoryList';
 import CreateTrackingNum from './CreateTrackingNum';
 import TextField from '@material-ui/core/TextField';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import Dashboard from './Dashboard';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const inputProps = {
   step: 300,
@@ -124,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dashboard() {
+export default function App() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -137,6 +139,7 @@ export default function Dashboard() {
 
   return (
     <div className={classes.root}>
+      <Router>
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
@@ -152,11 +155,6 @@ export default function Dashboard() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -173,35 +171,21 @@ export default function Dashboard() {
         </div>
         <Divider />
         <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Paper className={fixedHeightPaper}>
-                <CreateTrackingNum />
-              </Paper>
-            </Grid>
-            {/* Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <PackageList />
-              </Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <InventoryList />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
-        </Container>
+            <Container maxWidth="lg" className={classes.container}>
+              <Switch>
+                <Route exact path='/'><Dashboard /></Route>
+                <Route path='/package'><PackageList /></Route>
+                <Route path='/inventory'><InventoryList /></Route>
+              </Switch>
+              <Box pt={4}>
+                <Copyright />
+              </Box>
+            </Container>
       </main>
+      </Router>
     </div>
   );
 }

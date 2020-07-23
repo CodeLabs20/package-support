@@ -4,50 +4,36 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
+import { Link } from 'react-router-dom';
+import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+
+export function ListItemLink(props) {
+  const { icon, primary, to } = props;
+
+  const CustomLink = React.useMemo(
+    () =>
+      React.forwardRef((linkProps, ref) => (
+        <Link ref={ref} to={to} {...linkProps} />
+      )),
+    [to],
+  );
+
+  return (
+
+      <ListItem button component={CustomLink}>
+        <ListItemIcon>{icon}</ListItemIcon>
+        <ListItemText primary={primary} />
+      </ListItem>
+  
+  );
+}
+
 
 export const mainListItems = (
   <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
-    
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Inventory" />
-    </ListItem>
-  </div>
-);
-
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItem>
+    <ListItemLink icon={<DashboardIcon />} primary="Dashboard" to="/"/>
+    <ListItemLink icon={<LocalShippingIcon />} primary="Packages" to="/package"/>
+    <ListItemLink icon={<LayersIcon />} primary="Inventory" to="/inventory"/>    
   </div>
 );
