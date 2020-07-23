@@ -44,15 +44,23 @@ app.post('/createPackage', async (req, res) => {
   }
 });
 
-//PATCH /updatePackage/:id
+//PATCH /updatePackage/:tracking_code
 //update an existing package record
-app.patch('/updatePackage/:id', async (req, res) => {
+app.patch('/updatePackage/:tracking_code', async (req, res) => {
 
   try {
-    let package = await packageModel.findByIdAndUpdate(req.params.id, req.body);
+    //uncomment to update by record id
+    /* let package = await packageModel.findByIdAndUpdate(req.params.id, req.body);
     await package.save();
 
-    package = await packageModel.findById(req.params.id);
+    package = await packageModel.findById(req.params.id); */
+
+    let package = await packageModel.findOneAndUpdate({trackingNum: req.params.tracking_code}, {deliveryStatus: req.body.deliveryStatus});
+    await package.save();
+
+    //uncomment to pass back updated record by id
+    //package = await packageModel.findById(req.params.id);
+    package = await packageModel.findOne({trackingNum: req.params.tracking_code});
 
     res.send(package);
   } catch (err) {
