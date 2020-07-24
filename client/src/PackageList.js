@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import axios from 'axios';
+import InventoryForm from './InventoryForm';
 
 //Create package records for list
 //id key is created to create rows
@@ -64,14 +65,13 @@ export default function PackageList() {
               <TableCell>{row.trackingNum}</TableCell>
               <TableCell>{deliveryStatus[row.deliveryStatus]}</TableCell>
               <TableCell>{checkinStatus[row.checkInStatus]}</TableCell>
+              <TableCell><InventoryForm/></TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          See more orders
-        </Link>
+        <InventoryForm />
       </div>
     </React.Fragment>
   );
