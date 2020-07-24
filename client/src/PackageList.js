@@ -65,6 +65,7 @@ export default function PackageList() {
               <TableCell>{row.trackingNum}</TableCell>
               <TableCell>{deliveryStatus[row.deliveryStatus]}</TableCell>
               <TableCell>{checkinStatus[row.checkInStatus]}</TableCell>
+              <TableCell><InventoryForm/></TableCell>
             </TableRow>
           ))}
         </TableBody>
