@@ -45,7 +45,7 @@ app.post('/createPackage', async (req, res) => {
 });
 
 //PATCH /updatePackage/:tracking_code
-//update an existing package record
+//update an existing package record by tracking number
 app.patch('/updatePackage/:tracking_code', async (req, res) => {
 
   try {
@@ -61,6 +61,26 @@ app.patch('/updatePackage/:tracking_code', async (req, res) => {
     //uncomment to pass back updated record by id
     //package = await packageModel.findById(req.params.id);
     package = await packageModel.findOne({trackingNum: req.params.tracking_code});
+
+    res.send(package);
+  } catch (err) {
+    res.status(500).send(err)
+  }
+})
+
+//PATCH /updatePackageById/:_id
+//update an existing package record by object id number
+app.patch('/updatePackageById/:_id', async (req, res) => {
+  console.log(req.params);
+  try {
+    //update by record id
+    let package = await packageModel.findByIdAndUpdate(req.params._id, req.body);
+    await package.save();
+
+    package = await packageModel.findById(req.params._id); 
+
+    //pass back updated record by id
+    package = await packageModel.findById(req.params._id);
 
     res.send(package);
   } catch (err) {

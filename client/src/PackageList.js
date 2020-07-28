@@ -28,9 +28,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PackageList() {
   const dataInit = [{
-    trackingNum: '----', 
-    deliveryStatus: '----',
-    checkInStatus: '----'
+    _id: '',
+    trackingNum: '', 
+    deliveryStatus: '',
+    checkInStatus: '',
+    carrier: ''
   }]  
   const classes = useStyles();
   const [packageList, setPackageList] = useState(dataInit);
@@ -48,6 +50,9 @@ export default function PackageList() {
   const deliveryStatus = ['pre_transit', 'in_transit', 'out_for_delivery', 'delivered', 'return_to_sender', 'failure', 'unknown'];
   const checkinStatus = ['not checked in', 'checked in'];
 
+  //counter for table cell keys
+  let i = 0;
+
   return (
     <React.Fragment>
       <Title>Package List</Title>
@@ -60,12 +65,12 @@ export default function PackageList() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {packageList.map((row) => (
-            <TableRow key={row.id}>
+          {packageList.map((row, index) => (
+            <TableRow key={row._id}>
               <TableCell>{row.trackingNum}</TableCell>
               <TableCell>{deliveryStatus[row.deliveryStatus]}</TableCell>
               <TableCell>{checkinStatus[row.checkInStatus]}</TableCell>
-              <TableCell><InventoryForm/></TableCell>
+              <TableCell><InventoryForm _id={row._id} trackingNum={row.trackingNum} carrier={row.carrier}/></TableCell>
             </TableRow>
           ))}
         </TableBody>
