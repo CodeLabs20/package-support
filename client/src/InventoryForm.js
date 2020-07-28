@@ -20,6 +20,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';  
+import NumberFormat from 'react-number-format';
 
 import 'date-fns';
 
@@ -323,7 +324,15 @@ export default function Form(props) {
               {inventoryList.map((row, index) => (
                 <TableRow key={row.id}>
                   <TableCell>{row.itemName}</TableCell>
-                  <TableCell>{row.price}</TableCell>
+                  <TableCell>
+                    <NumberFormat 
+                      value={row.price} 
+                      displayType={'text'} 
+                      thousandSeparator={true} 
+                      prefix={'$'} 
+                      decimalScale={2} 
+                      fixedDecimalScale={true}/>
+                  </TableCell>
                   <TableCell>{row.quantity}</TableCell>
                   <TableCell>{row.purchaseOrderStatus}</TableCell>
                   <TableCell>
