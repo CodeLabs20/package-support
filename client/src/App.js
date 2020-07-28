@@ -27,6 +27,8 @@ import TextField from '@material-ui/core/TextField';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Dashboard from './Dashboard';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Squirrel from './squirrelbig.png';
+import "./App.css";
 
 const inputProps = {
   step: 300,
@@ -37,7 +39,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        PkgSquirrel
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -120,6 +122,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+    
   },
   fixedHeight: {
     height: 400,
@@ -152,9 +155,9 @@ export default function App() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
+            <h10>PkgSquirrel
+        <img src={Squirrel} id="squirrel"/>
+        </h10>
         </Toolbar>
       </AppBar>
       <Drawer
