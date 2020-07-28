@@ -37,17 +37,28 @@ export default function EditButton(props){
         label: 'Completed',
       }];
     const [open, setOpen] = React.useState(false);
-    const {register, control, handleSubmit} = useForm({
-        defaultValues:{
-            purchaseOrderStatus: status
+    const [value, setValue] = useState(status);
+    useEffect(() => {
+      setValue(status);
+    }, [status]);
+    const {register, control, reset, handleSubmit} = useForm(
+      {
+        defaultValues: {
+          purchaseOrderStatus: value
         }
-    });
+      }
+    );
+    
     //to make dialog responsive
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   const handleClickOpen = () => {
     setOpen(true);
+    //reset default value from initial useForm()
+    reset({purchaseOrderStatus: status});
+    console.log(status);
+    console.log(value);
   };
 
   const handleClose = () => {
