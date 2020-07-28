@@ -41,7 +41,7 @@ export default function InventoryList() {
   });
 
   //array to convert data
-  const purchaseOrderStatus = ['pre_transit', 'in_transit', 'out_for_delivery', 'delivered', 'return_to_sender', 'failure', 'unknown'];
+  const purchaseOrderStatus = ['not created', 'created', 'pending', 'completed'];
 
   //for the table once the right array has been created
   //<TableCell>{purchaseOrderStatus[row.deliveryStatus]}</TableCell>
@@ -61,6 +61,7 @@ export default function InventoryList() {
             <TableCell>Quantity</TableCell>
             <TableCell>Check-In Date</TableCell>
             <TableCell>Purchase Order Status</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -78,8 +79,8 @@ export default function InventoryList() {
               </TableCell>
               <TableCell>{row.quantity}</TableCell>
               <TableCell>{row.checkInDate}</TableCell>
-              <TableCell>{row.purchaseOrderStatus}</TableCell>
-              <TableCell><EditButton itemId={row._id} status={row.purchaseOrderStatus}/></TableCell>
+              <TableCell>{purchaseOrderStatus[row.purchaseOrderStatus]}</TableCell>
+              <TableCell><EditButton itemId={row._id} status={purchaseOrderStatus[row.purchaseOrderStatus]}/></TableCell>
             </TableRow>
           ))}
         </TableBody>
