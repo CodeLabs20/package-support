@@ -90,8 +90,7 @@ export default function CreateTrackingNum() {
   
     return (
     <div>
-        <h1>PkgSquirrel</h1>
-        <img src={Squirrel} id="squirrel"/>
+        
         <h3 style={{marginTop: 20, marginBottom: -20}}>
             Create Tracking Number
         </h3>    
