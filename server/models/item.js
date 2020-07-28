@@ -22,8 +22,8 @@ const itemSchema = new mongoose.Schema({
   },
 
   purchaseOrderStatus: {
-    type: String,
-    default: "unknown"
+    type: Number,
+    default: 0
   },
 
   packageId: {
