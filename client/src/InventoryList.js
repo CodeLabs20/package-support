@@ -9,8 +9,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import axios from 'axios';
 import NumberFormat from 'react-number-format';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import IconButton from '@material-ui/core/IconButton';
 import EditButton from './EditButtonInventory';
 
 

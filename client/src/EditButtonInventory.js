@@ -37,7 +37,9 @@ export default function EditButton(props){
         label: 'Completed',
       }];
     const [open, setOpen] = React.useState(false);
+    //receive/update new prop value from parent component
     const [value, setValue] = useState(status);
+    //useEffect will only execute setValue when the value of status has changes
     useEffect(() => {
       setValue(status);
     }, [status]);
