@@ -31,6 +31,10 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import IconButton from '@material-ui/core/IconButton';
+
+
 let itemList = [];
 let id = 0;
 let item;
@@ -57,17 +61,21 @@ export default function Form(props) {
     
   //console.log(this.props);
   const [open, setOpen] = React.useState(false);
-  /* let dataInit = [{
-    itemName: '----', 
-    quantity: '----',
-    price: '----',
-    purchaseOrderStatus: '---'
-  }];
-   */   
-
+  
   let dataInit = []
   const [inventoryList, setInventoryList] = useState(dataInit);  
-  const {register, control, handleSubmit} = useForm();
+  const {control, reset, handleSubmit} = useForm(
+    {
+      defaultValues:{
+          
+        itemName: '',
+        quantity: '',
+        price: '',
+        purchaseOrderStatus: 'not created',
+        checkedInDate: new Date(Date.now()).toString()      
+      }
+    }
+  );
   
   const [selectedDate, setSelectedDate] = React.useState(Date.now());
   const handleDateChange = (date) => {
@@ -119,75 +127,56 @@ export default function Form(props) {
     let itemName = data.itemName;
     let price = data.price;
     let quantity = data.quantity;
-    
-    let purchaseOrderStatus = translatePurchaseOrder(data.purchaseOrderStatus);
+    alert(data.purchaseOrderStatus);
 
     item = {
       itemName: itemName,
       quantity: quantity,
       price: price,
-      purchaseOrderStatus: purchaseOrderStatus || 'not created',
+      purchaseOrderStatus: data.purchaseOrderStatus,
       packageID: packageInfo._id
     };
     itemList.push(item);
     id++;   
     setInventoryList(itemList);
-    //setInventoryList(itemList);
-    console.log(itemList);
-    console.log(itemList.length);
-    console.log(id);
-    //console.log(inventoryList);  
-    console.log(packageInfo);
+    //clear form and have its default values set
+    reset({
+      itemName: '',
+      quantity: '',
+      price: '',
+      purchaseOrderStatus: 'not created'
+    });
   }
+
+  let axiosArr = [];
+  let axiosCall;
 
   //event handler when items are checked in to write to the database
   function submitInventory(data){
-    let checkedInDate = data.checkedInDate || new Date(Date.now()).toString(); 
+    let checkedInDate = data.checkedInDate; 
     alert(`Checked-In Date: ${checkedInDate} \n Inventory: ${inventoryList.map((item) => item.itemName)}`);
     //Note: Need to check whether data has been inputted/changed before a submit
     //TODO: write data to database 
 
-    //console.log(inventoryList[0]);
+    let headers = {'Content-Type': 'application/json'};
 
-    //Testing get call to make sure axios is working - works
-    // axios.get('http://localhost:3005/getAllItems')
-    //     .then(response => alert(JSON.stringify(response.data)));
-   
+    inventoryList.map((row) => {
+      let orderStatus = translatePurchaseOrder(row.purchaseOrderStatus);
+      let record = {
+        itemName: row.itemName,
+        quantity: row.quantity,
+        price: row.price,
+        purchaseOrderStatus: orderStatus,
+        packageId: row.packageID,
+        checkInDate: checkedInDate
+      };
+
+      axiosCall = axios.post('http://localhost:3005/createItem', record, {headers: headers}) 
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error)); 
+      
+      axiosArr.push(axiosCall);
     
-    //NOTE: this works - adds the record
-    // axios.post('http://localhost:3005/createItem', 
-    //     {
-    //       itemName: "test3",
-    //       price: "25.00",
-    //       quantity: "10000",
-    //       purchaseOrderStatus: "created",
-    //       checkInDate: "2020-07-20",
-    //       packageId: "5f10e13c981cbc473cae2bd8"
-        
-    //     }
-    //   ) 
-    //   .then(function (response) {
-    //     console.log(response);
-    //   })
-    //   .catch(error => {console.log(error)});   
-
-    
-
-    inventoryList.map((row) => (
-
-      console.log(
-          {
-            itemName: row.itemName,
-            quantity: row.quantity,
-            price: row.price,
-            purchaseOrderStatus: row.purchaseOrderStatus,
-            packageID: row.packageID,
-            checkedInDate: checkedInDate
-          }  
-        ),
-
-      console.log(row)
-
 
       //NOTE: This part is not working **
       //axios.post('http://localhost:3005/createItem',
@@ -204,7 +193,12 @@ export default function Form(props) {
         //   console.log(response);
         // })
         // .catch(error => {console.log(error)})    
-    ));
+    //)
+    });
+
+    Promise.all(axiosArr)
+      .then((response) => console.log(response.data))
+      .catch((err) => console.log(err));
 
 
     //Update checkInStatus for package
@@ -227,6 +221,8 @@ export default function Form(props) {
 
     //clear out items in list upon closing dialog
     //code is here instead of handleClose b/c we want to send data to DB before clearing
+    console.log('HERE"S THE ARRAY');
+    console.log(axiosArr);
     setInventoryList(dataInit);
   }
 
@@ -324,12 +320,17 @@ export default function Form(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {inventoryList.map((row) => (
+              {inventoryList.map((row, index) => (
                 <TableRow key={row.id}>
                   <TableCell>{row.itemName}</TableCell>
-                  <TableCell>{row.quantity}</TableCell>
                   <TableCell>{row.price}</TableCell>
-                  <TableCell>{statusText[row.purchaseOrderStatus]}</TableCell>
+                  <TableCell>{row.quantity}</TableCell>
+                  <TableCell>{row.purchaseOrderStatus}</TableCell>
+                  <TableCell>
+                    <IconButton color="secondary" aria-label="delete" onClick={() => {inventoryList.splice(index, 1); setInventoryList(inventoryList);}}>
+                      <HighlightOffIcon />
+                    </IconButton>
+                  </TableCell>            
                 </TableRow>
               ))}
             </TableBody>
