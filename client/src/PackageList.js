@@ -9,6 +9,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import axios from 'axios';
 import InventoryForm from './InventoryForm';
+import ClearIcon from '@material-ui/icons/Clear';
+import CheckIcon from '@material-ui/icons/Check';
+import { green } from '@material-ui/core/colors';
+
 
 //Create package records for list
 //id key is created to create rows
@@ -46,7 +50,7 @@ export default function PackageList() {
 
   //arrays to convert data
   const deliveryStatus = ['pre_transit', 'in_transit', 'out_for_delivery', 'delivered', 'return_to_sender', 'failure', 'unknown'];
-  const checkinStatus = ['not checked in', 'checked in'];
+  const checkinStatus = [<ClearIcon style={{ color: 'red'}}></ClearIcon>, <CheckIcon style={{ color: '#008000'}}></CheckIcon>];
 
   return (
     <React.Fragment>
