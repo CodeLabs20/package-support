@@ -75,9 +75,6 @@ export default function PackageList() {
           ))}
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>
-        <InventoryForm />
-      </div>
     </React.Fragment>
   );
 }
