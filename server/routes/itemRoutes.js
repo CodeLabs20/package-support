@@ -34,7 +34,7 @@ app.get('/getItem/:id', async (req, res) => {
 //create a record for a new item
 app.post('/createItem', async (req, res) => {
   let item = new itemModel(req.body);
-
+  console.log("calling createItem");
   try {
     await item.save();
     item = await itemModel.findById(item.id);

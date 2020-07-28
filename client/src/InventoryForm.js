@@ -34,10 +34,11 @@ import {
 let itemList = [];
 let id = 0;
 let item;
+let packageInfo;
   
-export default function Form() {
-  //TODO: change values to status codes
-  const checkinStatus = [{
+export default function Form(props) {
+  
+  const purchaseOrderStatus = [{
     value: 'not created',
     label: 'Not Created' //change to image + text in the future,
   },
@@ -54,6 +55,7 @@ export default function Form() {
     label: 'Completed',
   }];
     
+  //console.log(this.props);
   const [open, setOpen] = React.useState(false);
   /* let dataInit = [{
     itemName: '----', 
@@ -61,7 +63,8 @@ export default function Form() {
     price: '----',
     purchaseOrderStatus: '---'
   }];
-   */    
+   */   
+
   let dataInit = []
   const [inventoryList, setInventoryList] = useState(dataInit);  
   const {register, control, handleSubmit} = useForm();
@@ -84,19 +87,47 @@ export default function Form() {
     //clear out items in list upon closing dialog
     itemList = [];
   };
+  
+
+  const statusText = ['not created', 'created', 'pending', 'completed'];
+  function translatePurchaseOrder(status){
+        let statusCode;
+        switch (status) {
+            case statusText[0]:
+                statusCode = 0;
+                break;
+            case statusText[1]:
+                statusCode = 1;
+                break;
+            case statusText[2]:
+                statusCode = 2;
+                break;
+            case statusText[3]:
+                statusCode = 3;
+                break;
+            default:
+                statusCode = 0;  
+        }
+        return statusCode;
+    }
+
+  //Set packageInfo to props so props can be accessed within functions
+  packageInfo = props;
 
   //event handler when add item form is submitted
   function AddItem(data){
     let itemName = data.itemName;
     let price = data.price;
     let quantity = data.quantity;
-    let purchaseOrderStatus = data.purchaseOrderStatus;
+    
+    let purchaseOrderStatus = translatePurchaseOrder(data.purchaseOrderStatus);
+
     item = {
-      id: id,
       itemName: itemName,
       quantity: quantity,
       price: price,
-      purchaseOrderStatus: purchaseOrderStatus || 'not created'
+      purchaseOrderStatus: purchaseOrderStatus || 'not created',
+      packageID: packageInfo._id
     };
     itemList.push(item);
     id++;   
@@ -106,6 +137,7 @@ export default function Form() {
     console.log(itemList.length);
     console.log(id);
     //console.log(inventoryList);  
+    console.log(packageInfo);
   }
 
   //event handler when items are checked in to write to the database
@@ -115,6 +147,83 @@ export default function Form() {
     //Note: Need to check whether data has been inputted/changed before a submit
     //TODO: write data to database 
 
+    //console.log(inventoryList[0]);
+
+    //Testing get call to make sure axios is working - works
+    // axios.get('http://localhost:3005/getAllItems')
+    //     .then(response => alert(JSON.stringify(response.data)));
+   
+    
+    //NOTE: this works - adds the record
+    // axios.post('http://localhost:3005/createItem', 
+    //     {
+    //       itemName: "test3",
+    //       price: "25.00",
+    //       quantity: "10000",
+    //       purchaseOrderStatus: "created",
+    //       checkInDate: "2020-07-20",
+    //       packageId: "5f10e13c981cbc473cae2bd8"
+        
+    //     }
+    //   ) 
+    //   .then(function (response) {
+    //     console.log(response);
+    //   })
+    //   .catch(error => {console.log(error)});   
+
+    
+
+    inventoryList.map((row) => (
+
+      console.log(
+          {
+            itemName: row.itemName,
+            quantity: row.quantity,
+            price: row.price,
+            purchaseOrderStatus: row.purchaseOrderStatus,
+            packageID: row.packageID,
+            checkedInDate: checkedInDate
+          }  
+        ),
+
+      console.log(row)
+
+
+      //NOTE: This part is not working **
+      //axios.post('http://localhost:3005/createItem',
+      // {
+            // itemName: row.itemName,
+            // quantity: row.quantity,
+            // price: row.price,
+            // purchaseOrderStatus: row.purchaseOrderStatus,
+            // packageID: roww.packageID,
+            // checkedInDate: checkedInDate
+            
+        // }) 
+        // .then(function (response) {
+        //   console.log(response);
+        // })
+        // .catch(error => {console.log(error)})    
+    ));
+
+
+    //Update checkInStatus for package
+    let url = 'http://localhost:3005/updatePackageById/' + packageInfo._id;
+    console.log(url);
+
+
+    //checkInStatus of 1 = checked in; deliveryStatus of 3 = delivered
+    axios.patch(url, 
+        {
+          checkInStatus: 1,
+          deliveryStatus: 3
+        }
+      ) 
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(error => {console.log(error)});   
+    
 
     //clear out items in list upon closing dialog
     //code is here instead of handleClose b/c we want to send data to DB before clearing
@@ -136,7 +245,7 @@ export default function Form() {
         <DialogTitle id="responsive-dialog-title">{"Package Check-In"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Checking in for Package #3 (Tracking Number: ####, Carrier: USPS)
+            Checking in for Package #{props._id} (Tracking Number: {props.trackingNum}, Carrier: {props.carrier})
             <section>
               <div>
               {/* ---Form to Add Item--- */}
@@ -187,7 +296,7 @@ export default function Form() {
                         required
                         label="Purchase Order Status"
                         >
-                        {checkinStatus.map((option) => (
+                        {purchaseOrderStatus.map((option) => (
                           <MenuItem key={option.value} value={option.value}>
                             {option.label}
                           </MenuItem>
@@ -220,7 +329,7 @@ export default function Form() {
                   <TableCell>{row.itemName}</TableCell>
                   <TableCell>{row.quantity}</TableCell>
                   <TableCell>{row.price}</TableCell>
-                  <TableCell>{row.purchaseOrderStatus}</TableCell>
+                  <TableCell>{statusText[row.purchaseOrderStatus]}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

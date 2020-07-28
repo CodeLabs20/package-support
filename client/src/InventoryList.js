@@ -25,7 +25,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function InventoryList() {
+
   const dataInit = [];  
+
   const classes = useStyles();
   const [inventoryList, setInventoryList] = useState(dataInit);
   
@@ -63,7 +65,7 @@ export default function InventoryList() {
         </TableHead>
         <TableBody>
           {inventoryList.map((row) => (
-            <TableRow key={row.id}>
+            <TableRow key={row._id}>
               <TableCell>{capitalize(row.itemName)}</TableCell>
               <TableCell>
                 <NumberFormat 
