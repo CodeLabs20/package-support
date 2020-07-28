@@ -5,7 +5,7 @@ h3{
     font-weight: 500;
     line-height: 1.6;
     letter-spacing: 0.0075em;
-    margin-left: 170px;
+    margin-left: 190px;
     /* margin-top: 20px; */
   }
 
@@ -16,7 +16,10 @@ h1{
 }
 
 #squirrel{
-  size: 40px;
-  margin-top: -70px;
-  margin-right: 70px;
+  margin-top: -156px;
+  margin-left: 740px;
+  position: absolute;
+  height: 80px;
+
+
 }

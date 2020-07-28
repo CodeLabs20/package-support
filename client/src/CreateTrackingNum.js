@@ -10,6 +10,7 @@ import Title from './Title';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import './CreateTrackingNum.css';
+import Squirrel from './squirrelbig.png';
 
 const carriers = [
     {
@@ -90,20 +91,20 @@ export default function CreateTrackingNum() {
     return (
     <div>
         <h1>PkgSquirrel</h1>
-        {/* <img src={Squirrel} id="squirrel"/> */}
+        <img src={Squirrel} id="squirrel"/>
         <h3 style={{marginTop: 20, marginBottom: -20}}>
             Create Tracking Number
         </h3>    
         <form className="form" onSubmit={handleSubmit(submitTrackingForm)} style={{marginTop: 25}}>
                 <Controller as={
                     <TextField 
-                    label="Tracking Number" variant="outlined" style={{minWidth: 320, marginLeft: 170}}
+                    label="Tracking Number" variant="outlined" style={{minWidth: 320, marginLeft: 190}}
                     />
                     } 
                     name="trackingNumber" 
                     control={control} 
                     defaultValue="" />
-                <FormControl variant="outlined" style={{minWidth: 120, marginLeft: 20}}>
+                <FormControl variant="outlined" style={{minWidth: 120, marginLeft: 50}}>
                 <InputLabel id="select-outlined-label">Carrier</InputLabel>
                 <Controller as={
                     <Select
@@ -121,7 +122,7 @@ export default function CreateTrackingNum() {
                 defaultValue=""/>
                 </FormControl>
 
-            <Button variant="contained" color="primary" style={{marginLeft: 40, marginTop: 10}} type="submit">
+            <Button variant="contained" color="primary" style={{marginLeft: 70, marginTop: 10}} type="submit">
                 Submit
             </Button>
 
