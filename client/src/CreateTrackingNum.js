@@ -9,6 +9,7 @@ import axios from 'axios';
 import Title from './Title';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import './CreateTrackingNum.css';
 
 const carriers = [
     {
@@ -88,22 +89,21 @@ export default function CreateTrackingNum() {
   
     return (
     <div>
-        <Title>
+        <h1>PkgSquirrel</h1>
+        {/* <img src={Squirrel} id="squirrel"/> */}
+        <h3 style={{marginTop: 20, marginBottom: -20}}>
             Create Tracking Number
-        </Title>    
+        </h3>    
         <form className="form" onSubmit={handleSubmit(submitTrackingForm)} style={{marginTop: 25}}>
-            <section>
                 <Controller as={
                     <TextField 
-                    label="Tracking Number" variant="outlined"
+                    label="Tracking Number" variant="outlined" style={{minWidth: 320, marginLeft: 170}}
                     />
                     } 
                     name="trackingNumber" 
                     control={control} 
                     defaultValue="" />
-            </section>
-            <section style={{marginTop: 30}}>
-                <FormControl variant="outlined" style={{minWidth: 120}}>
+                <FormControl variant="outlined" style={{minWidth: 120, marginLeft: 20}}>
                 <InputLabel id="select-outlined-label">Carrier</InputLabel>
                 <Controller as={
                     <Select
@@ -120,14 +120,14 @@ export default function CreateTrackingNum() {
                 control={control}
                 defaultValue=""/>
                 </FormControl>
-            </section>
-            <Button variant="contained" color="primary" style={{marginTop: 40}} type="submit">
+
+            <Button variant="contained" color="primary" style={{marginLeft: 40, marginTop: 10}} type="submit">
                 Submit
             </Button>
 
         </form>
         {/* need to comment out */}
-        <h2 style={{marginTop: 40}}>DELIVERY STATUS: {deliveryStatus}</h2>
+        <h2 style={{marginTop: 10}}>DELIVERY STATUS: {deliveryStatus}</h2>
         </div>
     );
   }

@@ -1,0 +1,22 @@
+h3{
+    font-size: 1.25rem;
+    color: #3f51b5;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.0075em;
+    margin-left: 170px;
+    /* margin-top: 20px; */
+  }
+
+h1{
+  font-size: 77px;
+  margin-top: 10px;
+  margin-left: 270px;
+}
+
+#squirrel{
+  size: 40px;
+  margin-top: -70px;
+  margin-right: 70px;
+}

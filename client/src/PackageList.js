@@ -11,7 +11,6 @@ import axios from 'axios';
 import InventoryForm from './InventoryForm';
 import ClearIcon from '@material-ui/icons/Clear';
 import CheckIcon from '@material-ui/icons/Check';
-import { green } from '@material-ui/core/colors';
 
 
 //Create package records for list

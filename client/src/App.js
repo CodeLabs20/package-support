@@ -37,7 +37,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        PkgSquirrel
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -120,6 +120,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+    
   },
   fixedHeight: {
     height: 400,
