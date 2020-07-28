@@ -9,6 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import axios from 'axios';
 import NumberFormat from 'react-number-format';
+import EditButton from './EditButtonInventory';
+
 
 //Create inventory records for list
 
@@ -23,13 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function InventoryList() {
-  const dataInit = [{
-    itemName: '----', 
-    price: '----',
-    quantity: '----',
-    checkInDate: '----',
-    purchaseOrderStatus: '----'
-  }]  
+  const dataInit = [];  
   const classes = useStyles();
   const [inventoryList, setInventoryList] = useState(dataInit);
   
@@ -81,6 +77,7 @@ export default function InventoryList() {
               <TableCell>{row.quantity}</TableCell>
               <TableCell>{row.checkInDate}</TableCell>
               <TableCell>{row.purchaseOrderStatus}</TableCell>
+              <TableCell><EditButton itemId={row._id} status={row.purchaseOrderStatus}/></TableCell>
             </TableRow>
           ))}
         </TableBody>
