@@ -34,6 +34,7 @@ import {
 
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import IconButton from '@material-ui/core/IconButton';
+import moment from 'moment'; 
 
 
 let itemList = [];
@@ -155,7 +156,7 @@ export default function Form(props) {
   //event handler when items are checked in to write to the database
   function submitInventory(data){
     let checkedInDate = data.checkedInDate; 
-    alert(`Checked-In Date: ${checkedInDate} \n Inventory: ${inventoryList.map((item) => capitalize(item.itemName))}`);
+    alert(`Checked-In Date: ${moment(checkedInDate).format('MM/DD/YYYY')} \n Inventory: ${inventoryList.map((item) => capitalize(item.itemName))}`);
     //Note: Need to check whether data has been inputted/changed before a submit
     //TODO: write data to database 
 
