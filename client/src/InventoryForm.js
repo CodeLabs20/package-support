@@ -237,7 +237,7 @@ export default function Form(props) {
   //TODO: refactor code to section off dialog box into different components
   return (
     <div>    
-      <Button variant="contained" color="primary" style={{display: 'block'}} onClick={handleClickOpen}>
+      <Button size="small" variant="contained" color="primary" style={{display: 'block'}} onClick={handleClickOpen}>
         Check In
       </Button>
       <Dialog
