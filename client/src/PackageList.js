@@ -81,7 +81,7 @@ export default function PackageList() {
               <TableCell>{row.trackingNum}</TableCell>
               <TableCell>{row.carrier}</TableCell>
               <TableCell>{capitalize(deliveryStatus[row.deliveryStatus])}</TableCell>
-              <TableCell>{capitalize(checkinStatus[row.checkInStatus])}</TableCell>
+              <TableCell>{checkinStatus[row.checkInStatus]}</TableCell>
               <TableCell><InventoryForm _id={row._id} trackingNum={row.trackingNum} carrier={row.carrier}/></TableCell>
             </TableRow>
           ))}
