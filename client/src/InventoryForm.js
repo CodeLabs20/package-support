@@ -128,7 +128,7 @@ export default function Form(props) {
     let itemName = data.itemName;
     let price = data.price;
     let quantity = data.quantity;
-    alert(data.purchaseOrderStatus);
+    //alert(data.purchaseOrderStatus);  //for testing
 
     item = {
       itemName: itemName,
@@ -155,7 +155,7 @@ export default function Form(props) {
   //event handler when items are checked in to write to the database
   function submitInventory(data){
     let checkedInDate = data.checkedInDate; 
-    alert(`Checked-In Date: ${checkedInDate} \n Inventory: ${inventoryList.map((item) => item.itemName)}`);
+    alert(`Checked-In Date: ${checkedInDate} \n Inventory: ${inventoryList.map((item) => capitalize(item.itemName))}`);
     //Note: Need to check whether data has been inputted/changed before a submit
     //TODO: write data to database 
 
@@ -225,6 +225,12 @@ export default function Form(props) {
     console.log('HERE"S THE ARRAY');
     console.log(axiosArr);
     setInventoryList(dataInit);
+  }
+
+  function capitalize(str){
+    if (typeof(str) === "string") {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
   }
 
   //TODO: refactor code to section off dialog box into different components
@@ -323,7 +329,7 @@ export default function Form(props) {
             <TableBody>
               {inventoryList.map((row, index) => (
                 <TableRow key={row.id}>
-                  <TableCell>{row.itemName}</TableCell>
+                  <TableCell>{capitalize(row.itemName)}</TableCell>
                   <TableCell>
                     <NumberFormat 
                       value={row.price} 
@@ -334,7 +340,7 @@ export default function Form(props) {
                       fixedDecimalScale={true}/>
                   </TableCell>
                   <TableCell>{row.quantity}</TableCell>
-                  <TableCell>{row.purchaseOrderStatus}</TableCell>
+                  <TableCell>{capitalize(row.purchaseOrderStatus)}</TableCell>
                   <TableCell>
                     <IconButton color="secondary" aria-label="delete" onClick={() => {inventoryList.splice(index, 1); setInventoryList(inventoryList);}}>
                       <HighlightOffIcon />
