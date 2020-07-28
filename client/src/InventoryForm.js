@@ -31,6 +31,10 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers';
 
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import IconButton from '@material-ui/core/IconButton';
+
+
 let itemList = [];
 let id = 0;
 let item;
@@ -135,12 +139,13 @@ export default function Form(props) {
     itemList.push(item);
     id++;   
     setInventoryList(itemList);
-    //setInventoryList(itemList);
-    console.log(itemList);
-    console.log(itemList.length);
-    console.log(id);
-    //console.log(inventoryList);  
-    console.log(packageInfo);
+    //clear form and have its default values set
+    reset({
+      itemName: '',
+      quantity: '',
+      price: '',
+      purchaseOrderStatus: 'not created'
+    });
   }
 
   let axiosArr = [];
@@ -156,11 +161,12 @@ export default function Form(props) {
     let headers = {'Content-Type': 'application/json'};
 
     inventoryList.map((row) => {
+      let orderStatus = translatePurchaseOrder(row.purchaseOrderStatus);
       let record = {
         itemName: row.itemName,
         quantity: row.quantity,
         price: row.price,
-        purchaseOrderStatus: 0,
+        purchaseOrderStatus: orderStatus,
         packageId: row.packageID,
         checkInDate: checkedInDate
       };
@@ -314,12 +320,17 @@ export default function Form(props) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {inventoryList.map((row) => (
+              {inventoryList.map((row, index) => (
                 <TableRow key={row.id}>
                   <TableCell>{row.itemName}</TableCell>
-                  <TableCell>{row.quantity}</TableCell>
                   <TableCell>{row.price}</TableCell>
+                  <TableCell>{row.quantity}</TableCell>
                   <TableCell>{row.purchaseOrderStatus}</TableCell>
+                  <TableCell>
+                    <IconButton color="secondary" aria-label="delete" onClick={() => {inventoryList.splice(index, 1); setInventoryList(inventoryList);}}>
+                      <HighlightOffIcon />
+                    </IconButton>
+                  </TableCell>            
                 </TableRow>
               ))}
             </TableBody>
