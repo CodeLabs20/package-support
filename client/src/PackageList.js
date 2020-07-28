@@ -62,6 +62,7 @@ export default function PackageList() {
             <TableCell>Tracking Number</TableCell>
             <TableCell>Delivery Status</TableCell>
             <TableCell>Check-in Status</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
