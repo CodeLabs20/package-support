@@ -37,7 +37,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        pkgSquirrel
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -153,7 +153,7 @@ export default function App() {
             <MenuIcon />
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            pkgSquirrel
           </Typography>
         </Toolbar>
       </AppBar>
