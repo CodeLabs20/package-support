@@ -37,8 +37,8 @@ let item;
 let packageInfo;
   
 export default function Form(props) {
-  //TODO: change values to status codes
-  const checkinStatus = [{
+  
+  const purchaseOrderStatus = [{
     value: 'not created',
     label: 'Not Created' //change to image + text in the future,
   },
@@ -87,6 +87,29 @@ export default function Form(props) {
     //clear out items in list upon closing dialog
     itemList = [];
   };
+  
+
+  const statusText = ['not created', 'created', 'pending', 'completed'];
+  function translatePurchaseOrder(status){
+        let statusCode;
+        switch (status) {
+            case statusText[0]:
+                statusCode = 0;
+                break;
+            case statusText[1]:
+                statusCode = 1;
+                break;
+            case statusText[2]:
+                statusCode = 2;
+                break;
+            case statusText[3]:
+                statusCode = 3;
+                break;
+            default:
+                statusCode = 0;  
+        }
+        return statusCode;
+    }
 
   //Set packageInfo to props so props can be accessed within functions
   packageInfo = props;
@@ -97,7 +120,8 @@ export default function Form(props) {
     let price = data.price;
     let quantity = data.quantity;
     
-    let purchaseOrderStatus = data.purchaseOrderStatus;
+    let purchaseOrderStatus = translatePurchaseOrder(data.purchaseOrderStatus);
+
     item = {
       itemName: itemName,
       quantity: quantity,
@@ -272,7 +296,7 @@ export default function Form(props) {
                         required
                         label="Purchase Order Status"
                         >
-                        {checkinStatus.map((option) => (
+                        {purchaseOrderStatus.map((option) => (
                           <MenuItem key={option.value} value={option.value}>
                             {option.label}
                           </MenuItem>
@@ -305,7 +329,7 @@ export default function Form(props) {
                   <TableCell>{row.itemName}</TableCell>
                   <TableCell>{row.quantity}</TableCell>
                   <TableCell>{row.price}</TableCell>
-                  <TableCell>{row.purchaseOrderStatus}</TableCell>
+                  <TableCell>{statusText[row.purchaseOrderStatus]}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
