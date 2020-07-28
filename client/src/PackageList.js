@@ -56,6 +56,12 @@ export default function PackageList() {
   //counter for table cell keys
   let i = 0;
 
+  function capitalize(str){
+    if (typeof(str) === "string") {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+  }
+
   return (
     <React.Fragment>
       <Title>Package List</Title>
@@ -63,15 +69,18 @@ export default function PackageList() {
         <TableHead>
           <TableRow>
             <TableCell>Tracking Number</TableCell>
+            <TableCell>Carrier</TableCell>
             <TableCell>Delivery Status</TableCell>
             <TableCell>Check-in Status</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {packageList.map((row, index) => (
             <TableRow key={row._id}>
               <TableCell>{row.trackingNum}</TableCell>
-              <TableCell>{deliveryStatus[row.deliveryStatus]}</TableCell>
+              <TableCell>{row.carrier}</TableCell>
+              <TableCell>{capitalize(deliveryStatus[row.deliveryStatus])}</TableCell>
               <TableCell>{checkinStatus[row.checkInStatus]}</TableCell>
               <TableCell><InventoryForm _id={row._id} trackingNum={row.trackingNum} carrier={row.carrier}/></TableCell>
             </TableRow>

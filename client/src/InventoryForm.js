@@ -20,6 +20,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';  
+import NumberFormat from 'react-number-format';
 
 import 'date-fns';
 
@@ -33,6 +34,7 @@ import {
 
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import IconButton from '@material-ui/core/IconButton';
+import moment from 'moment'; 
 
 
 let itemList = [];
@@ -127,7 +129,7 @@ export default function Form(props) {
     let itemName = data.itemName;
     let price = data.price;
     let quantity = data.quantity;
-    alert(data.purchaseOrderStatus);
+    //alert(data.purchaseOrderStatus);  //for testing
 
     item = {
       itemName: itemName,
@@ -154,7 +156,7 @@ export default function Form(props) {
   //event handler when items are checked in to write to the database
   function submitInventory(data){
     let checkedInDate = data.checkedInDate; 
-    alert(`Checked-In Date: ${checkedInDate} \n Inventory: ${inventoryList.map((item) => item.itemName)}`);
+    alert(`Checked-In Date: ${moment(checkedInDate).format('MM/DD/YYYY')} \n Inventory: ${inventoryList.map((item) => capitalize(item.itemName))}`);
     //Note: Need to check whether data has been inputted/changed before a submit
     //TODO: write data to database 
 
@@ -226,6 +228,12 @@ export default function Form(props) {
     setInventoryList(dataInit);
   }
 
+  function capitalize(str){
+    if (typeof(str) === "string") {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+  }
+
   //TODO: refactor code to section off dialog box into different components
   return (
     <div>    
@@ -241,7 +249,7 @@ export default function Form(props) {
         <DialogTitle id="responsive-dialog-title">{"Package Check-In"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Checking in for Package #{props._id} (Tracking Number: {props.trackingNum}, Carrier: {props.carrier})
+            Check-in for Package with Tracking Number: {props.trackingNum}, Carrier: {props.carrier}
             <section>
               <div>
               {/* ---Form to Add Item--- */}
@@ -322,10 +330,18 @@ export default function Form(props) {
             <TableBody>
               {inventoryList.map((row, index) => (
                 <TableRow key={row.id}>
-                  <TableCell>{row.itemName}</TableCell>
-                  <TableCell>{row.price}</TableCell>
+                  <TableCell>{capitalize(row.itemName)}</TableCell>
+                  <TableCell>
+                    <NumberFormat 
+                      value={row.price} 
+                      displayType={'text'} 
+                      thousandSeparator={true} 
+                      prefix={'$'} 
+                      decimalScale={2} 
+                      fixedDecimalScale={true}/>
+                  </TableCell>
                   <TableCell>{row.quantity}</TableCell>
-                  <TableCell>{row.purchaseOrderStatus}</TableCell>
+                  <TableCell>{capitalize(row.purchaseOrderStatus)}</TableCell>
                   <TableCell>
                     <IconButton color="secondary" aria-label="delete" onClick={() => {inventoryList.splice(index, 1); setInventoryList(inventoryList);}}>
                       <HighlightOffIcon />
@@ -362,7 +378,7 @@ export default function Form(props) {
         </DialogContent>
         <DialogActions>
           <Button autoFocus  color="primary" type="submit" form="inventory" onClick={handleClose}>
-            Close
+            Submit Check-In
           </Button>
         </DialogActions>
       </Dialog>

@@ -156,8 +156,8 @@ export default function App() {
             <MenuIcon />
           </IconButton>
             <h10>PkgSquirrel
-        <img src={Squirrel} id="squirrel"/>
-        </h10>
+              <img src={Squirrel} id="squirrel"/>
+            </h10>
         </Toolbar>
       </AppBar>
       <Drawer

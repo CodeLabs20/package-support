@@ -10,6 +10,7 @@ import Title from './Title';
 import axios from 'axios';
 import NumberFormat from 'react-number-format';
 import EditButton from './EditButtonInventory';
+import moment from 'moment';
 
 
 //Create inventory records for list
@@ -43,9 +44,6 @@ export default function InventoryList() {
   //array to convert data
   const purchaseOrderStatus = ['not created', 'created', 'pending', 'completed'];
 
-  //for the table once the right array has been created
-  //<TableCell>{purchaseOrderStatus[row.deliveryStatus]}</TableCell>
-
   function capitalize(str){
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
@@ -78,8 +76,8 @@ export default function InventoryList() {
                   fixedDecimalScale={true}/>
               </TableCell>
               <TableCell>{row.quantity}</TableCell>
-              <TableCell>{row.checkInDate}</TableCell>
-              <TableCell>{purchaseOrderStatus[row.purchaseOrderStatus]}</TableCell>
+              <TableCell>{moment(row.checkInDate).format('MM/DD/YYYY')}</TableCell>
+              <TableCell>{capitalize(purchaseOrderStatus[row.purchaseOrderStatus])}</TableCell>
               <TableCell><EditButton itemId={row._id} status={purchaseOrderStatus[row.purchaseOrderStatus]}/></TableCell>
             </TableRow>
           ))}
