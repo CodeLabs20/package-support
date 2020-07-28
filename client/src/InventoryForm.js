@@ -249,7 +249,7 @@ export default function Form(props) {
         <DialogTitle id="responsive-dialog-title">{"Package Check-In"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Checking in for Package #{props._id} (Tracking Number: {props.trackingNum}, Carrier: {props.carrier})
+            Check-in for Package with Tracking Number: {props.trackingNum}, Carrier: {props.carrier}
             <section>
               <div>
               {/* ---Form to Add Item--- */}
@@ -378,7 +378,7 @@ export default function Form(props) {
         </DialogContent>
         <DialogActions>
           <Button autoFocus  color="primary" type="submit" form="inventory" onClick={handleClose}>
-            Close
+            Submit Check-In
           </Button>
         </DialogActions>
       </Dialog>
