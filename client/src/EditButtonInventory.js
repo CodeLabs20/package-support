@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
-//import {checkinStatus} from './InventoryForm';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
@@ -15,12 +14,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
-import { green } from '@material-ui/core/colors';
 import Button from '@material-ui/core/Button';
 
 export default function EditButton(props){
     const {status, itemId} = props;
-    const checkinStatus = [{
+    const purchaseOrderStatus = [{
         value: 'not created',
         label: 'Not Created' //change to image + text in the future,
       },
@@ -67,11 +65,34 @@ export default function EditButton(props){
     setOpen(false);
   };
 
+  const statusText = ['not created', 'created', 'pending', 'completed'];
+  function translatePurchaseOrder(status){
+        let statusCode;
+        switch (status) {
+            case statusText[0]:
+                statusCode = 0;
+                break;
+            case statusText[1]:
+                statusCode = 1;
+                break;
+            case statusText[2]:
+                statusCode = 2;
+                break;
+            case statusText[3]:
+                statusCode = 3;
+                break;
+            default:
+                statusCode = 0;  
+        }
+        return statusCode;
+    }
+
   function updateOrderStatus(data){
       console.log(data.purchaseOrderStatus);
       console.log(itemId);
+      let orderStatus = translatePurchaseOrder(data.purchaseOrderStatus);
       axios.patch(`http://localhost:3005/updateItem/${itemId}`, {
-        purchaseOrderStatus: data.purchaseOrderStatus
+        purchaseOrderStatus: orderStatus
       })
       .then((response) => console.log(JSON.stringify(response.data)))
       .catch((err) => console.log(err));
@@ -99,7 +120,7 @@ export default function EditButton(props){
                       id="demo-simple-select-outlined"
                       label="Purchase Order Status"
                       >
-                      {checkinStatus.map((option) => (
+                      {purchaseOrderStatus.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
                           {option.label}
                         </MenuItem>
