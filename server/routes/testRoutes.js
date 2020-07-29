@@ -5,11 +5,6 @@ const app = express();
 
 //test routes
 
-//GET /
-app.get('/', (request, response) => {
-    response.send("Hello World");
-});
-
 //GET /testData
 //to access this route from the client, route to 'https://localhost:3005/package'
 app.get('/testData', (req, res) => {

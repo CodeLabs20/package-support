@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('config-yml')
+const path = require('path');
 
 //routers
 const packageRouter = require('./routes/packageRoutes.js');
@@ -36,6 +37,13 @@ app.use(cors());
 app.use(packageRouter);
 app.use(itemRouter);
 app.use(testRouter);
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 //this code is taken from CreateTrackingNum.js
 //refactor code to import it instead, but this might run into conflicts
