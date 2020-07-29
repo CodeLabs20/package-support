@@ -28,6 +28,7 @@ mongoose.connect(config.mongo_db.uri, {
 const port = 3005; //Express.js 
 
 const cors = require('cors');
+const axios = require('axios');
 
 //to prevent cross-origin request blocked errors 
 app.use(cors());
