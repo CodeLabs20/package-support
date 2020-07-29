@@ -11,18 +11,34 @@ import axios from 'axios';
 import NumberFormat from 'react-number-format';
 import EditButton from './EditButtonInventory';
 import moment from 'moment';
-
-
-//Create inventory records for list
-
-function preventDefault(event) {
-  event.preventDefault();
-}
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
-  seeMore: {
-    marginTop: theme.spacing(3),
+  block:{
+    width: theme.spacing(12),
+    height: theme.spacing(5),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontWeight: 'bold',
+    borderRadius: 50
   },
+  grey: {
+    color: '#000000',
+    backgroundColor: '#BDBDBD',
+  },
+  black: {
+    color: '#FFFFFF',
+    backgroundColor: '#000000',
+  },
+  blue:{
+    color: '#FFFFFF',
+    backgroundColor: '#2196F3'
+  },
+  green:{
+    color: '#FFFFFF',
+    backgroundColor: '#43A047'
+  }
 }));
 
 export default function InventoryList() {
@@ -77,17 +93,48 @@ export default function InventoryList() {
               </TableCell>
               <TableCell>{row.quantity}</TableCell>
               <TableCell>{moment(row.checkInDate).format('MM/DD/YYYY')}</TableCell>
-              <TableCell>{capitalize(purchaseOrderStatus[row.purchaseOrderStatus])}</TableCell>
+              <TableCell><StatusColor text={capitalize(purchaseOrderStatus[row.purchaseOrderStatus])} /></TableCell>
               <TableCell><EditButton itemId={row._id} status={purchaseOrderStatus[row.purchaseOrderStatus]}/></TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          See more orders
-        </Link>
-      </div>
     </React.Fragment>
+  );
+}
+
+export function StatusColor(props){
+  const {text} = props;
+  const classes = useStyles();
+  const colorChoice = findColorStatus(text);
+  function findColorStatus(status){
+    let colorClass;
+    let statuses = ['Not created', 'Created', 'Pending', 'Completed'];
+    let allColors = [classes.grey, classes.black, classes.blue, classes.green];
+    switch(status){
+      case statuses[0]:
+        colorClass = allColors[0];
+        break;
+      case statuses[1]:
+        colorClass = allColors[1];
+        break;
+      case statuses[2]:
+        colorClass = allColors[2];
+        break;  
+      case statuses[3]:
+        colorClass = allColors[3];
+        break;    
+      default:
+        console.log('No color classes found.');
+    }
+    return colorClass;
+  }
+
+  const colorBlock = clsx(classes.block, colorChoice);
+
+  return(
+    <div className={colorBlock}>
+      {text}
+    </div>
   );
 }
