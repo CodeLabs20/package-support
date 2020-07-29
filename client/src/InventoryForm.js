@@ -158,8 +158,6 @@ export default function Form(props) {
     let checkedInDate = data.checkedInDate; 
     alert(`Checked-In Date: ${moment(checkedInDate).format('MM/DD/YYYY')} \n Inventory: ${inventoryList.map((item) => capitalize(item.itemName))}`);
     //Note: Need to check whether data has been inputted/changed before a submit
-    //TODO: write data to database 
-
     let headers = {'Content-Type': 'application/json'};
 
     inventoryList.map((row) => {
@@ -178,24 +176,6 @@ export default function Form(props) {
       .catch((error) => console.log(error)); 
       
       axiosArr.push(axiosCall);
-    
-
-      //NOTE: This part is not working **
-      //axios.post('http://localhost:3005/createItem',
-      // {
-            // itemName: row.itemName,
-            // quantity: row.quantity,
-            // price: row.price,
-            // purchaseOrderStatus: row.purchaseOrderStatus,
-            // packageID: roww.packageID,
-            // checkedInDate: checkedInDate
-            
-        // }) 
-        // .then(function (response) {
-        //   console.log(response);
-        // })
-        // .catch(error => {console.log(error)})    
-    //)
     });
 
     Promise.all(axiosArr)
@@ -237,7 +217,7 @@ export default function Form(props) {
   //TODO: refactor code to section off dialog box into different components
   return (
     <div>    
-      <Button size="small" variant="contained" color="primary" style={{display: 'block'}} onClick={handleClickOpen}>
+      <Button size="small" variant="contained" color="primary" style={{display: 'block', fontWeight: 'bold'}} onClick={handleClickOpen}>
         Check In
       </Button>
       <Dialog
