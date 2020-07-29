@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,6 +14,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import clsx from 'clsx';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   block:{
@@ -60,7 +60,7 @@ export default function PackageList() {
 
   //arrays to convert data
   const deliveryStatus = ['pre transit', 'in transit', 'out for delivery', 'delivered', 'return to sender', 'failure', 'unknown'];
-  const checkinStatus = [<ClearIcon style={{ color: 'red'}}></ClearIcon>, <CheckIcon style={{ color: '#008000'}}></CheckIcon>];
+  const checkinStatus = [<ClearIcon fontSize="large" style={{ color: 'red'}}></ClearIcon>, <CheckIcon fontSize="large" style={{ color: '#008000'}}></CheckIcon>];
 
   //counter for table cell keys
   let i = 0;
@@ -77,17 +77,17 @@ export default function PackageList() {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Tracking Number</TableCell>
+            <TableCell><Typography variant="h6">Tracking Number</Typography></TableCell>
             {/* <TableCell>Carrier</TableCell> */}
-            <TableCell>Delivery Status</TableCell>
-            <TableCell>Check-in Status</TableCell>
+            <TableCell><Typography variant="h6">Delivery Status</Typography></TableCell>
+            <TableCell><Typography variant="h6">Check-in Status</Typography></TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {packageList.map((row, index) => (
             <TableRow key={row._id}>
-              <TableCell>{row.trackingNum} <ColorBlock text={row.carrier}/></TableCell>
+              <TableCell><Typography variant="body1">{row.trackingNum}</Typography> <ColorBlock text={row.carrier}/></TableCell>
               {/* <TableCell>{capitalize(deliveryStatus[row.deliveryStatus])}</TableCell> */}
               <TableCell><StatusStepper delStatus={row.deliveryStatus}/></TableCell>
               <TableCell>{checkinStatus[row.checkInStatus]}</TableCell>

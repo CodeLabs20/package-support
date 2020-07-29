@@ -6,11 +6,9 @@ import MenuItem from '@material-ui/core/MenuItem';
 import {Controller, useForm} from 'react-hook-form';
 import './App.css';
 import axios from 'axios';
-import Title from './Title';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import './CreateTrackingNum.css';
-import Squirrel from './squirrelbig.png';
 
 const carriers = [
     {

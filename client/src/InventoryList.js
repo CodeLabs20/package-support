@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,6 +11,7 @@ import NumberFormat from 'react-number-format';
 import EditButton from './EditButtonInventory';
 import moment from 'moment';
 import clsx from 'clsx';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   block:{
@@ -70,29 +70,29 @@ export default function InventoryList() {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Item Name</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell>Quantity</TableCell>
-            <TableCell>Check-In Date</TableCell>
-            <TableCell>Purchase Order Status</TableCell>
+            <TableCell><Typography variant="h6">Item Name</Typography></TableCell>
+            <TableCell><Typography variant="h6">Price</Typography></TableCell>
+            <TableCell><Typography variant="h6">Quantity</Typography></TableCell>
+            <TableCell><Typography variant="h6">Check-In Date</Typography></TableCell>
+            <TableCell><Typography variant="h6">Purchase Order Status</Typography></TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {inventoryList.map((row) => (
             <TableRow key={row._id}>
-              <TableCell>{capitalize(row.itemName)}</TableCell>
+              <TableCell><Typography variant="body1">{capitalize(row.itemName)}</Typography></TableCell>
               <TableCell>
-                <NumberFormat 
+              <Typography variant="body1"><NumberFormat 
                   value={row.price} 
                   displayType={'text'} 
                   thousandSeparator={true} 
                   prefix={'$'} 
                   decimalScale={2} 
-                  fixedDecimalScale={true}/>
+                  fixedDecimalScale={true}/></Typography>
               </TableCell>
-              <TableCell>{row.quantity}</TableCell>
-              <TableCell>{moment(row.checkInDate).format('MM/DD/YYYY')}</TableCell>
+              <TableCell><Typography variant="body1">{row.quantity}</Typography></TableCell>
+              <TableCell><Typography variant="body1">{moment(row.checkInDate).format('MM/DD/YYYY')}</Typography></TableCell>
               <TableCell><StatusColor text={capitalize(purchaseOrderStatus[row.purchaseOrderStatus])} /></TableCell>
               <TableCell><EditButton itemId={row._id} status={purchaseOrderStatus[row.purchaseOrderStatus]}/></TableCell>
             </TableRow>
