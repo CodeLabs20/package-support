@@ -119,13 +119,13 @@ export default function CreateTrackingNum() {
                 defaultValue=""/>
                 </FormControl>
 
-            <Button variant="contained" color="primary" style={{marginLeft: 70, marginTop: 10}} type="submit">
-                Submit
+            <Button variant="contained" color="primary" style={{marginLeft: 70, marginTop: 10, fontWeight: 'bold'}} type="submit">
+                Track Package
             </Button>
 
         </form>
         {/* need to comment out */}
-        <h2 style={{marginTop: 10}}>DELIVERY STATUS: {deliveryStatus}</h2>
+        <h2 style={{marginTop: 25, marginLeft: 190}}>DELIVERY STATUS: {deliveryStatus}</h2>
         </div>
     );
   }

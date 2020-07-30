@@ -357,6 +357,9 @@ export default function Form(props) {
             </MuiPickersUtilsProvider>
         </DialogContent>
         <DialogActions>
+          <Button autoFocus  color="primary" onClick={handleClose}>
+            Cancel
+          </Button>
           <Button autoFocus  color="primary" type="submit" form="inventory" onClick={handleClose}>
             Submit Check-In
           </Button>
