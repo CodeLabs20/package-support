@@ -66,7 +66,6 @@ export default function InventoryList() {
 
   return (
     <React.Fragment>
-      <Title>Inventory List</Title>
       <Table size="small">
         <TableHead>
           <TableRow>

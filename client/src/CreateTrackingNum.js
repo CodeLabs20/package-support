@@ -27,7 +27,7 @@ const carriers = [
   
 export default function CreateTrackingNum() {
     const [deliveryStatus, setDeliveryStatus] = useState('');
-    const {register, control, handleSubmit} = useForm();
+    const {register, control, reset, handleSubmit} = useForm();
 
     function submitTrackingForm(data){
         //Testing purposes
@@ -47,6 +47,7 @@ export default function CreateTrackingNum() {
             }
         })
         .catch((err) => console.log(err));
+        reset({trackingNumber: '', carrier: ''});
     }
 
     function writeToDB(trackingNum, carrier, deliveryStatus){

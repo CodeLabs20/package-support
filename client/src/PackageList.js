@@ -72,8 +72,7 @@ export default function PackageList() {
   }
 
   return (
-    <React.Fragment>
-      <Title>Package List</Title>
+    <React.Fragment>  
       <Table size="small">
         <TableHead>
           <TableRow>
