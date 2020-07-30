@@ -262,7 +262,7 @@ export default function Form(props) {
                   {<TextField
                     required
                     id="outlined-required"
-                    label="Total Price per Item"
+                    label="Total Price"
                     defaultValue=""
                     variant="outlined"
                     style={{margin: 10}}
