@@ -133,8 +133,11 @@ export default function EditButton(props){
               </form>
             </DialogContent>
             <DialogActions>
+              <Button autoFocus  color="primary" onClick={handleClose}>
+                Cancel
+              </Button>
               <Button autoFocus  color="primary" type="submit" form="editItem" onClick={handleClose}>
-                Change
+                Update Purchase Order
               </Button>
             </DialogActions>
           </Dialog>

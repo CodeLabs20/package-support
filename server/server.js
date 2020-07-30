@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('config-yml')
+const config = require('config-yml');
 
 //routers
 const packageRouter = require('./routes/packageRoutes.js');
