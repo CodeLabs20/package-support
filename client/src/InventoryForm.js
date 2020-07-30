@@ -156,7 +156,6 @@ export default function Form(props) {
   //event handler when items are checked in to write to the database
   function submitInventory(data){
     let checkedInDate = data.checkedInDate; 
-    alert(`Checked-In Date: ${moment(checkedInDate).format('MM/DD/YYYY')} \n Inventory: ${inventoryList.map((item) => capitalize(item.itemName))}`);
     //Note: Need to check whether data has been inputted/changed before a submit
     let headers = {'Content-Type': 'application/json'};
 
@@ -263,7 +262,7 @@ export default function Form(props) {
                   {<TextField
                     required
                     id="outlined-required"
-                    label="Price per Unit"
+                    label="Total Price per Item"
                     defaultValue=""
                     variant="outlined"
                     style={{margin: 10}}
@@ -357,6 +356,9 @@ export default function Form(props) {
             </MuiPickersUtilsProvider>
         </DialogContent>
         <DialogActions>
+          <Button autoFocus  color="primary" onClick={handleClose}>
+            Cancel
+          </Button>
           <Button autoFocus  color="primary" type="submit" form="inventory" onClick={handleClose}>
             Submit Check-In
           </Button>

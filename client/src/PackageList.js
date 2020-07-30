@@ -103,11 +103,33 @@ export default function PackageList() {
 export function StatusStepper(props){
   const {delStatus} = props;
   const [activeStep, setActiveStep] = React.useState(delStatus);
-  const deliverySteps = ['pre transit', 'in transit', 'out for delivery', 'delivered'];
   useEffect(() => {
     setActiveStep(delStatus);
   }, [delStatus]);
   
+  let deliverySteps = findDeliverySteps(delStatus);
+  function findDeliverySteps(pkgStatus){
+    let returnSteps;
+    const packageTransit = ['pre transit', 'in transit', 'out for delivery', 'delivered'];
+    const returnPackage = ['return to sender'];
+    const failPackage = ['failure'];
+    const unknownPackage = ['unknown'];
+    switch(pkgStatus){
+      case 4:
+        returnSteps = returnPackage;
+        break;
+      case 5:
+        returnSteps = failPackage;
+        break;
+      case 6:
+        returnSteps = unknownPackage;
+        break;
+      default:
+        returnSteps = packageTransit;
+    }
+    return returnSteps;
+  }
+
   return(
     <Stepper activeStep={activeStep} alternativeLabel>
       {deliverySteps.map((label) => (
