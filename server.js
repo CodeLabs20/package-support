@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('config-yml')
-const path = require('path');
+//const config = require('config-yml')
+//const path = require('path');
 
 //routers
 const packageRouter = require('./routes/packageRoutes.js');
@@ -10,7 +10,7 @@ const testRouter = require('./routes/testRoutes.js');
 
 
 //EasyPostAPI
-const apiKey = config.easy_post.prod_key; //Production API Key
+const apiKey = process.env.EASYPOST_KEY; //Production API Key
 const EasyPost = require('@easypost/api');
 //create EasyPostAPI object to make calls to API
 const api = new EasyPost(apiKey, {
@@ -22,7 +22,11 @@ const app = express();
 app.use(express.json()); // Make sure it comes back as json
 
 //connect to db
-mongoose.connect(config.mongo_db.uri, {
+const userName = process.env.MONGO_USER;
+const pwd = process.env.MONGO_PWD;
+const dbName = process.env.MONGO_DBNAME;
+const mongo_uri = `mongodb+srv://${userName}:${pwd}@cluster0.mle1w.mongodb.net/${dbName}?retryWrites=true&w=majority`
+mongoose.connect(mongo_uri, {
   useNewUrlParser: true
 });
 
