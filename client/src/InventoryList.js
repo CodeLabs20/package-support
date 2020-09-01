@@ -53,9 +53,9 @@ export default function InventoryList() {
   //TODO: need to add a second parameter of an empty array to useEffect to only rerender and call database once
   //TODO: store user's input locally and append it after the database display to decrease calls to the DB
   useEffect(() => {
-    axios.get('http://localhost:3005/getAllItems')
+    axios.get('https://pkg-squirrel.herokuapp.com/getAllItems')
         .then(response => setInventoryList(response.data));
-  });
+  }, []);
 
   //array to convert data
   const purchaseOrderStatus = ['not created', 'created', 'pending', 'completed'];

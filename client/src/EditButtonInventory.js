@@ -91,7 +91,7 @@ export default function EditButton(props){
       console.log(data.purchaseOrderStatus);
       console.log(itemId);
       let orderStatus = translatePurchaseOrder(data.purchaseOrderStatus);
-      axios.patch(`http://localhost:3005/updateItem/${itemId}`, {
+      axios.patch(`https://pkg-squirrel.herokuapp.com/updateItem/${itemId}`, {
         purchaseOrderStatus: orderStatus
       })
       .then((response) => console.log(JSON.stringify(response.data)))

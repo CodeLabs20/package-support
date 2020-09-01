@@ -170,7 +170,7 @@ export default function Form(props) {
         checkInDate: checkedInDate
       };
 
-      axiosCall = axios.post('http://localhost:3005/createItem', record, {headers: headers}) 
+      axiosCall = axios.post('https://pkg-squirrel.herokuapp.com/createItem', record, {headers: headers}) 
       .then((response) => console.log(response.data))
       .catch((error) => console.log(error)); 
       
@@ -183,7 +183,7 @@ export default function Form(props) {
 
 
     //Update checkInStatus for package
-    let url = 'http://localhost:3005/updatePackageById/' + packageInfo._id;
+    let url = 'https://pkg-squirrel.herokuapp.com/updatePackageById/' + packageInfo._id;
     console.log(url);
 
 

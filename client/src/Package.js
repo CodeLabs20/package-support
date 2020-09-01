@@ -23,7 +23,7 @@ export default function Package(){
     useEffect(() => {
         //axios functions like ajax and fetch
         //getting data from the Express.js server
-        axios.get('http://localhost:3005/package')
+        axios.get('https://pkg-squirrel.herokuapp.com/package')
             .then(response => setPackageData(response.data));
     }, []);
 

@@ -54,9 +54,9 @@ export default function PackageList() {
   //TODO: need to add a second parameter of an empty array to useEffect to only rerender and call database once
   //TODO: store user's input locally and append it after the database display to decrease calls to the DB
   useEffect(() => {
-    axios.get('http://localhost:3005/getAllPackages')
+    axios.get('https://pkg-squirrel.herokuapp.com/getAllPackages')
         .then(response => setPackageList(response.data));
-  });
+  }, []);
 
   //arrays to convert data
   const deliveryStatus = ['pre transit', 'in transit', 'out for delivery', 'delivered', 'return to sender', 'failure', 'unknown'];

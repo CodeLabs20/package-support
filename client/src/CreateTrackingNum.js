@@ -35,7 +35,7 @@ export default function CreateTrackingNum() {
         //Testing data
         //TRKNUM: 9241990990092105153169
         //CR: USPS
-        axios.post('http://localhost:3005/getDeliveryStatus', {
+        axios.post('https://pkg-squirrel.herokuapp.com/getDeliveryStatus', {
             trackingNum: data.trackingNumber,
             carrier: data.carrier
         })
@@ -52,7 +52,7 @@ export default function CreateTrackingNum() {
 
     function writeToDB(trackingNum, carrier, deliveryStatus){
         let deliveryCode = translateDeliveryStatus(deliveryStatus);
-        axios.post('http://localhost:3005/createPackage', {
+        axios.post('https://pkg-squirrel.herokuapp.com/createPackage', {
             trackingNum: trackingNum,
             carrier: carrier,
             deliveryStatus: deliveryCode
