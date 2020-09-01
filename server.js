@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 //const config = require('config-yml')
-//const path = require('path');
+const path = require('path');
 
 //routers
 const packageRouter = require('./routes/packageRoutes.js');
@@ -108,7 +108,7 @@ app.post("/trackerUpdated", (req, res) => {
       let tracking_code = req.body.result.tracking_code;
       deliveryStatus = translateDeliveryStatus(deliveryStatus); 
       //console.log(tracking_code);
-      axios.patch(`http://localhost:3005/updatePackage/${tracking_code}`, {deliveryStatus: deliveryStatus})
+      axios.patch(`http://pkg-squirrel.herokuapp.com/updatePackage/${tracking_code}`, {deliveryStatus: deliveryStatus})
           .then((response) => console.log(`TRACKER STATUS UPDATED: ${response.data.deliveryStatus}`))
           .catch((err) => console.log(err));
   }
